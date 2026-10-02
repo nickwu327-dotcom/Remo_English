@@ -1,39 +1,60 @@
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>單字複習站</title>
+<title>小芭樂的單字庫</title>
 <style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f7f8fa;--fg:#1d2330;--card:#fff;--pri:#3b6fe0;--bd:#d9dde5;--ok:#1a8f4c;--bad:#d23b3b}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171a21;--fg:#e8ebf2;--card:#232833;--pri:#6b94f0;--bd:#394050;--ok:#4cc582;--bad:#f06b6b}}
-:root[data-theme="dark"]{--bg:#171a21;--fg:#e8ebf2;--card:#232833;--pri:#6b94f0;--bd:#394050;--ok:#4cc582;--bad:#f06b6b}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#e8f5ff;--bg2:#fff4e0;--fg:#2b3350;--card:#fff;--pri:#4f8cff;--pri2:#2f6be0;--acc:#ff9f43;--bd:#bfd9f5;--ok:#1fa85a;--bad:#e8505b;--chip:#f0f7ff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b2238;--bg2:#2a2236;--fg:#eef1fb;--card:#262f4a;--pri:#6fa0ff;--pri2:#4f86f0;--acc:#ffb066;--bd:#43507a;--ok:#4cd68a;--bad:#ff7b84;--chip:#2f3a5c}}
+:root[data-theme="dark"]{--bg:#1b2238;--bg2:#2a2236;--fg:#eef1fb;--card:#262f4a;--pri:#6fa0ff;--pri2:#4f86f0;--acc:#ffb066;--bd:#43507a;--ok:#4cd68a;--bad:#ff7b84;--chip:#2f3a5c}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;line-height:1.5}
-.wrap{max-width:760px;margin:0 auto;padding:12px}
-nav{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-nav button{flex:1;padding:10px 6px;border:1px solid var(--bd);background:var(--card);color:var(--fg);border-radius:10px;font-size:15px;cursor:pointer}
-nav button.on{background:var(--pri);color:#fff;border-color:var(--pri)}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px}
-.weeks{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
-.weeks label{border:1px solid var(--bd);border-radius:8px;padding:5px 10px;cursor:pointer;user-select:none}
-.weeks label.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+body{margin:0;background:linear-gradient(160deg,var(--bg),var(--bg2));min-height:100vh;color:var(--fg);font-family:"Hiragino Maru Gothic ProN","Microsoft JhengHei","PingFang TC","Noto Sans TC",system-ui,sans-serif;font-size:18px;line-height:1.55}
+.wrap{max-width:780px;margin:0 auto;padding:14px}
+.hero{text-align:center;font-size:30px;font-weight:800;color:var(--pri2);margin:4px 0 12px;letter-spacing:2px}
+.hero span{display:inline-block;animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px) rotate(8deg)}}
+nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
+nav button{padding:12px 6px;border:3px solid var(--bd);background:var(--card);color:var(--fg);border-radius:18px;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 4px 0 var(--bd);font-family:inherit}
+nav button.on{background:var(--pri);color:#fff;border-color:var(--pri2);box-shadow:0 4px 0 var(--pri2)}
+.card{background:var(--card);border:3px solid var(--bd);border-radius:24px;padding:18px;margin-bottom:14px;box-shadow:0 6px 0 var(--bd)}
+.card b{font-size:20px;color:var(--pri2)}
+.weeks{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}
+.weeks label{border:3px solid var(--bd);background:var(--chip);border-radius:999px;padding:7px 16px;cursor:pointer;user-select:none;font-weight:700}
+.weeks label.on{background:var(--acc);color:#fff;border-color:var(--acc);box-shadow:0 3px 0 rgba(0,0,0,.18)}
+.weeks label.on::before{content:"✓ "}
 .weeks input{display:none}
-button.b{padding:9px 16px;border:0;border-radius:8px;background:var(--pri);color:#fff;font-size:15px;cursor:pointer;margin:3px 4px 3px 0}
-button.b.g{background:transparent;color:var(--fg);border:1px solid var(--bd)}
-input[type=text],input[type=date]{font-size:20px;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
-input[type=date]{font-size:15px;width:auto}
-.big{font-size:44px;text-align:center;margin:8px 0}
-.fb{text-align:center;font-size:18px;min-height:28px;margin:8px 0}
+button.b{padding:12px 22px;border:0;border-radius:16px;background:var(--pri);color:#fff;font-size:19px;font-weight:800;cursor:pointer;margin:4px 6px 4px 0;box-shadow:0 5px 0 var(--pri2);font-family:inherit}
+button.b:active{transform:translateY(4px);box-shadow:0 1px 0 var(--pri2)}
+button.b.g{background:var(--card);color:var(--fg);border:3px solid var(--bd);box-shadow:0 4px 0 var(--bd);padding:9px 16px;font-size:17px}
+#qstart{background:var(--ok);box-shadow:0 5px 0 rgba(0,0,0,.2);font-size:22px;padding:14px 28px}
+#qrestart{border-color:var(--acc);color:var(--acc)}
+#qsub{font-size:24px;padding:14px 32px;background:var(--acc);box-shadow:0 5px 0 rgba(0,0,0,.2)}
+input[type=text],input[type=date]{font-size:30px;padding:14px;border:4px solid var(--bd);border-radius:18px;background:var(--chip);color:var(--fg);width:100%;box-sizing:border-box;text-align:center;font-family:inherit;outline:none}
+input[type=text]:focus{border-color:var(--pri)}
+input[type=date]{font-size:16px;width:auto;padding:6px 10px;text-align:left}
+input[type=checkbox]{width:22px;height:22px;vertical-align:middle;accent-color:var(--acc)}
+.big{text-align:center;margin:10px 0}
+#qplay{font-size:28px;padding:16px 32px;border-radius:999px}
+.fb{text-align:center;font-size:24px;font-weight:800;min-height:34px;margin:12px 0}
 .ok{color:var(--ok)}.bad{color:var(--bad)}
 .hide{display:none!important}
-.miss{color:var(--ok);font-weight:700;text-decoration:underline}.extra{color:var(--bad);text-decoration:line-through}.fb div{margin:4px 0;font-size:22px;letter-spacing:1px}.fb .ph{font-size:18px;letter-spacing:0;opacity:.75}.fb .muted{font-size:13px;letter-spacing:0}
-table{width:100%;border-collapse:collapse;font-size:15px}
-th,td{padding:6px 8px;border-bottom:1px solid var(--bd);text-align:left}
+.miss{color:var(--ok);font-weight:800;text-decoration:underline}.extra{color:var(--bad);text-decoration:line-through}
+.fb div{margin:6px 0;font-size:26px;letter-spacing:1px;font-weight:700}
+.fb .ph{font-size:20px;letter-spacing:0;opacity:.8}
+.fb .muted{font-size:14px;letter-spacing:0;font-weight:400}
+table{width:100%;border-collapse:collapse;font-size:17px;margin-top:8px}
+th{background:var(--chip);color:var(--pri2)}
+th,td{padding:9px 10px;border-bottom:2px dashed var(--bd);text-align:left}
 .sc{overflow-x:auto}
-.muted{opacity:.65;font-size:14px}
-.row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd)}
-.row .w{font-size:19px;font-weight:600;min-width:120px}.row .p{flex:1;opacity:.75}
-.bar{height:8px;background:var(--bd);border-radius:4px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--pri)}
+.muted{opacity:.7;font-size:15px}
+h4{font-size:22px;color:var(--pri2)}
+.row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:2px dashed var(--bd)}
+.row .w{font-size:24px;font-weight:800;min-width:140px}.row .p{flex:1;opacity:.75;font-size:19px}
+.bar{height:18px;background:var(--chip);border:3px solid var(--bd);border-radius:999px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--ok),var(--acc));border-radius:999px;transition:width .3s}
+@media(max-width:480px){.hero{font-size:24px}.wrap{padding:10px}.row .w{min-width:100px;font-size:21px}}
 </style></head><body><div class="wrap">
+<div class="hero"><span>🌟</span> 小芭樂的單字庫 <span>🚀</span></div>
 <nav id="nav"></nav>
 
 <section id="s0"><div class="card">
@@ -41,7 +62,7 @@ th,td{padding:6px 8px;border-bottom:1px solid var(--bd);text-align:left}
 <div class="weeks" id="qw"></div>
 <button class="b g" id="qprev">勾選前週及當週</button><button class="b g" id="qall">全選</button><button class="b g" id="qnone">全不選</button>
 <label style="display:block;margin:8px 0"><input type="checkbox" id="qwrong"> 錯題重複練習 <span class="muted">(從答錯的題目出題;沒有錯題則從所選週次隨機出題)</span></label>
-<div style="display:flex;justify-content:space-between;gap:120px;align-items:center;margin-top:6px"><button class="b" id="qstart" style="margin:0">開始測驗</button><button class="b g" id="qrestart" style="margin:0">重新開始</button></div>
+<div style="display:flex;justify-content:space-between;gap:120px;align-items:center;margin-top:6px"><button class="b" id="qstart" style="margin:0">🚀 開始測驗</button><button class="b g" id="qrestart" style="margin:0">🔄 重新開始</button></div>
 <div id="qmsg" class="bad" style="margin-top:8px"></div>
 </div>
 <div class="card hide" id="qbox">
@@ -49,8 +70,8 @@ th,td{padding:6px 8px;border-bottom:1px solid var(--bd);text-align:left}
 <div class="big"><button class="b" id="qplay" style="font-size:28px">🔊 聽發音</button></div>
 <input type="text" id="qin" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="輸入英文單字後按 Enter">
 <div class="fb" id="qfb"></div>
-<div><button class="b" id="qsub">確認答案</button></div></div>
-<div class="card hide" id="qend"><b id="qsum"></b><div style="margin-top:8px"><button class="b" id="qretry">錯題重複練習</button></div></div>
+<div><button class="b" id="qsub">✅ 確認答案</button></div></div>
+<div class="card hide" id="qend"><b id="qsum"></b><div style="margin-top:8px"><button class="b" id="qretry">💪 錯題重複練習</button></div></div>
 </section>
 
 <section id="s1" class="hide"><div class="card"><b>選擇單字表</b><div class="weeks" id="sset"></div><b>選擇週次</b><div class="weeks" id="sw"></div>
@@ -65,32 +86,33 @@ th,td{padding:6px 8px;border-bottom:1px solid var(--bd);text-align:left}
 </div>
 <script>
 const CET={
-"1-2":"lost|lɔːst;kitten|ˈkɪtn;whisper|ˈwɪspɚ;promise|ˈprɑːmɪs;cover|ˈkʌvɚ;nervous|ˈnɝːvəs;lead / led|liːd / lɛd;beside|bɪˈsaɪd;familiar|fəˈmɪljɚ;lie / lay|laɪ / leɪ",
-"3":"begin / began|bɪˈɡɪn / bɪˈɡæn;understand / understood|ˌʌndɚˈstænd / ˌʌndɚˈstʊd;take / took|teɪk / tʊk;while|waɪl;confident|ˈkɑːnfɪdənt;recess|ˈriːsɛs;crunching|ˈkrʌntʃɪŋ;edge|ɛdʒ;imagine|ɪˈmædʒɪn;sight|saɪt",
-"4":"peep|piːp;gap|ɡæp;whoever|huˈɛvɚ;fence|fɛns;spot|spɑːt;seem|siːm;shiver|ˈʃɪvɚ;either|ˈiːðɚ;breath|brɛθ;puzzled|ˈpʌzld",
-"5-6":"neighborhood|ˈneɪbɚhʊd;freeze / froze|friːz / froʊz;owner|ˈoʊnɚ;paw|pɔː;van|væn;should|ʃʊd;announcement|əˈnaʊnsmənt;address|əˈdrɛs;receive|rɪˈsiːv;hand|hænd",
-"7":"few|fjuː;reward|rɪˈwɔːrd;set up|sɛt ʌp;anytime|ˈɛnitaɪm;sincerely|sɪnˈsɪrli;whole|hoʊl;cheer|tʃɪr;rescue|ˈrɛskjuː;entire|ɪnˈtaɪɚ;bunch|bʌntʃ",
-"10":"underground|ˈʌndɚɡraʊnd;nature|ˈneɪtʃɚ;dig / dug|dɪɡ / dʌɡ;burrow|ˈbɝːoʊ;tunnel|ˈtʌnl;crowd|kraʊd;especially|ɪˈspɛʃəli;rich|rɪtʃ;section|ˈsɛkʃən;muscle|ˈmʌsl",
-"11":"cover|ˈkʌvɚ;tiny|ˈtaɪni;hide / hid|haɪd / hɪd;predator|ˈprɛdətɚ;dead|dɛd;important|ɪmˈpɔːrtnt;waste|weɪst;nutrient|ˈnuːtriənt;mammal|ˈmæml;shovel|ˈʃʌvl",
-"12-13":"nearly|ˈnɪrli;blind|blaɪnd;instead of|ɪnˈstɛd ʌv;sense|sɛns;meal|miːl;throughout|θruːˈaʊt;lay / laid|leɪ / leɪd;hatch|hætʃ;surface|ˈsɝːfɪs;spend / spent|spɛnd / spɛnt",
-"14-15":"hunt|hʌnt;area|ˈɛriə;endangered|ɪnˈdeɪndʒɚd;chemical|ˈkɛmɪkl;active|ˈæktɪv;as if|æz ɪf;about|əˈbaʊt;partly|ˈpɑːrtli;treeless|ˈtriːləs;inch|ɪntʃ",
-"16-17":"distance|ˈdɪstəns;during|ˈdʊrɪŋ;bright|braɪt;eyesight|ˈaɪsaɪt;benefit|ˈbɛnɪfɪt;survive|sɚˈvaɪv;adult|əˈdʌlt;form|fɔːrm;closely|ˈkloʊsli;sign|saɪn"};
-const FET={1:"street|striːt;flower|ˈflaʊɚ;luck|lʌk;letter|ˈlɛtɚ;greet|griːt;calm|kɑːm;lobster|ˈlɑːbstɚ;cabbage|ˈkæbɪdʒ;purchase|ˈpɝːtʃəs;item|ˈaɪtəm",
-2:"move|muːv;jump|dʒʌmp;quickly|ˈkwɪkli;stand|stænd;sniff|snɪf;pinch|pɪntʃ;store|stɔːr;wave|weɪv;corner|ˈkɔːrnɚ;late|leɪt",
-3:"different|ˈdɪfrənt;friend|frɛnd;Japan|dʒəˈpæn;fold|foʊld;dessert|dɪˈzɝːt;mix|mɪks;show|ʃoʊ;paper|ˈpeɪpɚ;task|tæsk;create|kriˈeɪt",
-4:"class|klæs;smile|smaɪl;Mexico|ˈmɛksɪkoʊ;crane|kreɪn;cook|kʊk;teach|tiːtʃ;taste|teɪst;many|ˈmɛni;game|ɡeɪm;school|skuːl",
-5:"celebrate|ˈsɛləbreɪt;weekend|ˈwiːkɛnd;chore|tʃɔːr;similar|ˈsɪmələr;streamer|ˈstriːmɚ;candle|ˈkændl;contribute|kənˈtrɪbjuːt;company|ˈkʌmpəni;gather|ˈɡæðɚ;crowd|kraʊd",
-6:"together|təˈɡɛðɚ;work|wɝːk;laugh|læf;plenty|ˈplɛnti;special|ˈspɛʃəl;birthday|ˈbɝːθdeɪ;bake|beɪk;salad|ˈsæləd;neighbor|ˈneɪbɚ;lemonade|ˌlɛməˈneɪd",
-7:"dinner|ˈdɪnɚ;well|wɛl;reflection|rɪˈflɛkʃən;roar|rɔːr;echo|ˈɛkoʊ;fake|feɪk;narrator|ˈnæreɪtɚ;foe|foʊ;identify|aɪˈdɛntɪfaɪ;focus|ˈfoʊkəs",
-8:"character|ˈkærɪktɚ;forest|ˈfɔːrɪst;king|kɪŋ;voice|vɔɪs;snack|snæk;catch|kætʃ;save|seɪv;smart|smɑːrt;strange|streɪndʒ;silly|ˈsɪli",
-10:"habit|ˈhæbɪt;cave|keɪv;plain|pleɪn;need|niːd;habitat|ˈhæbɪtæt;camel|ˈkæməl;amazing|əˈmeɪzɪŋ;species|ˈspiːʃiːz;appreciate|əˈpriːʃieɪt;illustrate|ˈɪləstreɪt",
-11:"feature|ˈfiːtʃɚ;roam|roʊm;desert|ˈdɛzɚt;penguin|ˈpɛŋɡwɪn;teem|tiːm;several|ˈsɛvrəl;freshwater|ˈfrɛʃwɔːtɚ;Earth|ɝːθ;scientist|ˈsaɪəntɪst;ocean|ˈoʊʃən",
-12:"insect|ˈɪnsɛkt;predator|ˈprɛdətɚ;camouflage|ˈkæməflɑːʒ;pattern|ˈpætɚn;prey|preɪ;environment|ɪnˈvaɪrənmənt;enable|ɪˈneɪbl;branch|bræntʃ;pounce|paʊns;moth|mɔːθ",
-13:"stick|stɪk;hide|haɪd;spot|spɑːt;ground|ɡraʊnd;blend in|blɛnd ɪn;migrate|ˈmaɪɡreɪt;lizard|ˈlɪzɚd;stripe|straɪp;light|laɪt;dark|dɑːrk",
-14:"butterfly|ˈbʌtɚflaɪ;caterpillar|ˈkætɚpɪlɚ;tadpole|ˈtædpoʊl;change|tʃeɪndʒ;hatch|hætʃ;occur|əˈkɝː;transform|trænsˈfɔːrm;munch|mʌntʃ;vulnerable|ˈvʌlnərəbl;wiggle|ˈwɪɡl",
-15:"frog|frɔːɡ;egg|ɛɡ;leaf|liːf;dramatic|drəˈmætɪk;sequence|ˈsiːkwəns;chrysalis|ˈkrɪsəlɪs;survive|sɚˈvaɪv;wing|wɪŋ;transformation|ˌtrænsfɚˈmeɪʃən;develop|dɪˈvɛləp",
-16:"cloud|klaʊd;strong|strɔːŋ;spider|ˈspaɪdɚ;argue|ˈɑːrɡjuː;web|wɛb;strength|strɛŋθ;bright|braɪt;breeze|briːz;affect|əˈfɛkt;attitude|ˈætɪtuːd",
-17:"blow|bloʊ;loud|laʊd;restless|ˈrɛstləs;breath|brɛθ;shine|ʃaɪn;proud|praʊd;disappear|ˌdɪsəˈpɪr;contest|ˈkɑːntɛst;crawl|krɔːl;tiny|ˈtaɪni"};
+"1":"photographer|fəˈtɑgrəfər;all over|ɔl ˈoʊvər;moment|ˈmoʊmənt;occasion|əˈkeɪʒən;suit|sut;striking|ˈstraɪkɪŋ;hurtful|ˈhərtfəl;unusual|ənˈjuˌʒuəl;attractive|əˈtræktɪv;capture|ˈkæptʃər",
+"2":"hockey|ˈhɑki;soccer|ˈsɑkər;country|ˈkəntri;popular|ˈpɑpjələr;the rest of|ðə rɛst əv;middle|ˈmɪdəl;university|ˌjunəˈvərsəti;athlete|ˈæθˌlit;interested in|ˈɪntəˌrɛstɪd ɪn;good at|gʊd æt",
+"3-4":"tradition|trəˈdɪʃən;observe|əbˈzərv;frequently|ˈfrikwɛntli;festive|ˈfɛstɪv;mark|mɑrk;last|læst;set off|sɛt ɔf;prosperous|ˈprɑspərəs;at the stroke of|æt ðə stroʊk əv;look ahead|lʊk əˈhɛd",
+"5":"roommate|ˈruˌmeɪt;questionnaire|kˌwɛstʃəˈnɛr;stay up|steɪ əp;messy|ˈmɛsi;talkative|ˈtɔkətɪv;outgoing|ˈaʊtˌgoʊɪŋ;private|ˈpraɪvət;easygoing|ˈiziˈgoʊɪŋ;bother|ˈbɑðər;upset|ˈəpˌsɛt",
+"6-7":"author|ˈɔθər;actually|ˈæˌktʃuəli;unfortunately|ənˈfɔrtʃənətli;nightmare|ˈnaɪtˌmɛr;meaning|ˈminɪŋ;rapid|ˈræpɪd;creative|kriˈeɪtɪv;snore|snɔr;daydream|ˈdeɪˌdrim;come from|kəm frəm",
+"10":"international|ˌɪnərˈnæʃənɑl;across from|əˈkrɔs frəm;certain|ˈsərtən;look alike|lʊk əˈlaɪk;selfie|ˈsɛlˌfi;departure|dɪˈpɑrtʃər;arrival|ərˈaɪvəl;psychologist|saɪˈkɑlədʒəst;detective|dɪˈtɛktɪv;client|klaɪənt",
+"11-12":"comedy|ˈkɑmədi;horror|ˈhɔrər;animation|ˌænəˈmeɪʃən;cough|kɔf;scene|sin;work on|wərk ɔn;go crazy|goʊ ˈkreɪzi;day off|deɪ ɔf;catch a cold|kætʃ ə koʊld;allergic|əˈlərdʒɪk",
+"13-14":"feature|ˈfitʃər;waterproof|ˈwɔtərˌpruf;rarely|ˈrɛrli;text|tɛkst;run late|rən leɪt;popularity|ˌpɑpjəˈlɛrəti;connect|kəˈnɛkt;constantly|ˈkɑnstəntli;endless|ˈɛndləs;addicted|əˈdɪktɪd",
+"15-16":"include|ˌɪnˈklud;luxury|ˈləgʒəri;aquarium|əkˈwɛriəm;underground|ˈəndərˌgraʊnd;ice rink|aɪs rɪŋk;theme park|θim pɑrk;parking space|ˈpɑrkɪŋ speɪs;system|ˈsɪstəm;locate|ˈloʊˌkeɪt;stereo|ˈstɛriˌoʊ",
+"17":"difficult|ˈdɪfəkəlt;neat|nit;composition|ˌkɑmpəˈzɪʃən;excellent|ˈɛksələnt;handwriting|ˈhænˌdraɪtɪŋ;right there|raɪt ðɛr;absent|ˈæbsənt;recognize|ˈrɛkəgˌnaɪz;childhood|ˈtʃaɪlˌdhʊd;interpreter|ˌɪnˈtərprətər"};
+const FET={
+"1":"citizen|ˈsɪtɪzən;immigration|ˌɪməˈgreɪʃən;immigrant|ˈɪməgrənt;process|ˈprɔˌsɛs;interrogation|ˌɪnˌtɛrəˈgeɪʃən;admit|ədˈmɪt;prohibit|proʊˈhɪbət;detain|dɪˈteɪn;laborer|ˈleɪbərər;merchant|ˈmərtʃənt",
+"2":"opportunity|ˌɑpərˈtunəti;passport|ˈpæˌspɔrt;scholar|ˈskɑlər;diplomat|ˈdɪpləˌmæt;resemblance|rɪˈzɛmbləns;testify|ˈtɛstɪˌfaɪ;witness|ˈwɪtnəs;transcript|ˈtrænˌskrɪpt;affidavit|ˌæfəˈdeɪvət;deportation|ˌdipɔrˈteɪʃən",
+"3":"arrangement|ərˈeɪndʒmənt;pin|pɪn;coordinate|koʊˈɔrdəˌneɪt;claim|kleɪm;related|rɪˈleɪtɪd;nephew|ˈnɛfju;eldest|ˈɛldəst;peculiarity|pɪˌkjuliˈɛrəti;suspect|ˈsəˌspɛkt;reveal|rɪˈvil",
+"4":"report|rɪˈpɔrt;exclusion|ɪkˈskluʒən;act|ækt;identity|aɪˈdɛntəˌti;certificate|sərˈtɪfɪkət;make certain|meɪk ˈsərtən;estimate|ˈɛstəˌmeɪt;experience|ɪkˈspɪriəns;consider|kənˈsɪdər;official|əˈfɪʃəl",
+"5":"journal|ˈdʒərnəl;discrimination|dɪˌskrɪməˈneɪʃən;segregation|ˌsɛgrəˈgeɪʃən;Jim Crow laws|dʒɪm kroʊ lɔz;crop|krɑp;sharecropper|ˈʃɛrˌkrɑpər;cotton|ˈkɔtən;boll weevil|boʊl ˈwivəl;war effort|wɔr ˈɛfərt;integrated|ˈɪnəˌgreɪtɪd",
+"6":"current|ˈkɑrənt;harvest|ˈhɑrvəst;fertilizer|ˈfərtəˌlaɪzər;plow|plaʊ;owe|oʊ;rent|rɛnt;debt|dɛt;platform|ˈplætˌfɔrm;assembly line|əˈsɛmbli laɪn;manufacture|ˌmænjəˈfæktʃər",
+"7":"community|kəmˈjunɪti;furniture|ˈfərnɪtʃər;bunk bed|bəŋk bɛd;flight of stairs|flaɪt əv stɛrz;mile|maɪl;soak|soʊk;mutter|ˈmətər;chuckle|ˈtʃəkəl;talk back|tɔk bæk;ethnicity|ɛθˈnɪsɪti",
+"8":"struggling|ˈstrəgəlɪŋ;frown|fraʊn;disrespectful|ˌdɪsrɪˈspɛktfəl;percentage|pərˈsɛnɪdʒ;expect|ɪkˈspɛkt;cross one's fingers|krɔs wənz ˈfɪŋgərz;belongings|bɪˈlɔŋɪŋz;countryside|ˈkəntriˌsaɪd;resident|ˈrɛzɪdənt;get used to|gɪt juzd tɪ",
+"10":"native|ˈneɪtɪv;habitat|ˈhæbəˌtæt;population|ˌpɑpjəˈleɪʃən;restore|rɪˈstɔr;comeback|ˈkəmˌbæk;migrating|ˈmaɪˌgreɪtɪŋ;creature|ˈkritʃər;chemical|ˈkɛmɪkəl;poison|ˈpɔɪzən;fungus|ˈfəŋgəs",
+"11":"sensitive|ˈsɛnsɪtɪv;harm|hɑrm;extinct|ɪkˈstɪŋkt;atmosphere|ˈætməsˌfɪr;global warming|ˈgloʊbəl ˈwɔrmɪŋ;fossil fuel|ˈfɑsəl fjuəl;deformed|dɪˈfɔrmd;shrink|ʃrɪŋk;depend on|dɪˈpɛnd ɔn;food chain|fud tʃeɪn",
+"12":"shrub|ʃrəb;fence|fɛns;temporary|ˈtɛmpərˌɛri;shallow|ˈʃæloʊ;wetlands|ˈwɛˌtlændz;woodlands|ˈwʊˌdlændz;convince|kənˈvɪns;propose|prəˈpoʊz;force|fɔrs;devour|dɪˈvaʊər",
+"13":"introduce|ˌɪntrəˈdus;spotted|ˈspɑtɪd;burrow|bəroʊ;dozen|ˈdəzən;disease|dɪˈziz;develop|dɪˈvɛləp;drain|dreɪn;dump|dəmp;damage|ˈdæmɪdʒ;disappear|ˌdɪsəˈpɪr",
+"14":"hatchet|ˈhætʃət;fend for one's self|fɛnd fər wənz sɛlf;ignite|ˌɪgˈnaɪt;sputter|ˈspətər;painstaking|ˈpeɪnˌsteɪkɪŋ;gratify|ˈgrætəˌfaɪ;self-pity|sɛlf ˈpɪti;calf|kæf;gingerly|ˈdʒɪndʒərli;jerk|dʒərk",
+"15":"flammable|ˈflæməbəl;kindling|ˈkɪndlɪŋ;bark|bɑrk;birch tree|bərtʃ tri;match|mætʃ;strike|straɪk;smolder|sˈmoʊldər;accomplish|əˈkɑmplɪʃ;frustration|frəˈstreɪʃən;wince|wɪns",
+"16":"cave dweller|keɪv dˈwɛlər;examine|ɪgˈzæmɪn;staff|stæf;doze|doʊz;gesture|ˈdʒɛstʃər;register|ˈrɛdʒɪstər;stumble|ˈstəmbəl;rot|rɑt;quill|kwɪl;injury|ˈɪndʒəri",
+"17":"spark|spɑrk;charcoal|ˈtʃɑrˌkoʊl;glow|gloʊ;flue|flu;fine|faɪn;fluff|fləf;twig|twɪg;position|pəˈzɪʃən;limp|lɪmp;nick|nɪk"};
 const G=[],GM={};
 [["CET",CET],["FET",FET]].forEach(([s,R])=>Object.keys(R).sort((a,b)=>parseInt(a)-parseInt(b)).forEach(k=>{
  const[a,b]=k.split("-").map(Number),f=a,t=b||a,g={id:s[0]+k,set:s,from:f,to:t,label:s+" 第"+(f===t?f:f+"&"+t)+"週",
@@ -100,10 +122,10 @@ const t0=new Date();t0.setHours(0,0,0,0);
 const CUR=Math.floor(Math.round((t0-new Date(2026,7,31))/864e5)/7)+1;
 const hit=(g,w)=>w>=g.from&&w<=g.to;
 const prevCur=set=>G.filter(g=>(!set||g.set===set)&&(hit(g,CUR)||hit(g,CUR-1))).map(g=>g.id);
-let tests=[];try{tests=JSON.parse(localStorage.getItem("vq_tests")||"[]")}catch(e){}
+let tests=[];try{tests=JSON.parse(localStorage.getItem("vq_tests_g5")||"[]")}catch(e){}
 tests.forEach(t=>{t.log.forEach(l=>{if(!l.g){const g=G.find(g=>g.set==="FET"&&g.words.some(x=>x.w===l.w));l.g=g?g.id:"F?"}});
  t.weeks=t.weeks.map(x=>typeof x==="number"?"F"+x:x)});
-const save=()=>{try{localStorage.setItem("vq_tests",JSON.stringify(tests))}catch(e){}};
+const save=()=>{try{localStorage.setItem("vq_tests_g5",JSON.stringify(tests))}catch(e){}};
 const fmt=ts=>{const d=new Date(ts),p=n=>String(n).padStart(2,"0");return`${d.getFullYear()}/${p(d.getMonth()+1)}/${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`};
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const speak=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/\//g,","));u.lang="en-US";u.rate=.85;speechSynthesis.speak(u)}catch(e){}};
@@ -114,7 +136,7 @@ function chips(id,items,isOn,click){const c=$(id);c.innerHTML="";items.forEach((
 const wkChips=(id,set,sel,cb)=>chips(id,G.filter(g=>!set||g.set===set).map(g=>[g.id,set?g.label.slice(4):g.label]),k=>sel.has(k),k=>{sel.has(k)?sel.delete(k):sel.add(k);wkChips(id,set,sel,cb);cb&&cb()});
 const order=sel=>G.filter(g=>sel.has(g.id)).map(g=>g.id);
 
-const TABS=["測驗","學習統計","學習狀況","單字複習"];
+const TABS=["✏️ 測驗","📊 學習統計","🏅 學習狀況","📖 單字複習"];
 TABS.forEach((n,i)=>{const b=document.createElement("button");b.textContent=n;b.onclick=()=>show(i);$("nav").appendChild(b)});
 function show(i){TABS.forEach((_,j)=>{$("s"+j).classList.toggle("hide",i!==j);$("nav").children[j].classList.toggle("on",i===j)});if(i===1)stats();if(i===2)status();if(i===3)review()}
 const setChips=(id,cur,cb)=>chips(id,[["CET","CET"],["FET","FET"]],k=>k===cur,k=>{cb(k)});
@@ -136,17 +158,17 @@ function begin(){if(!qSel.size){msg("請先選擇週次");return}
 function launch(ids){T={id:Date.now(),set:qSet,weeks:ids,log:[]};tests.push(T);save();round(shuffle(base));$("qnote").textContent=note}
 function round(list){queue=list;idx=0;wrong=[];$("qend").classList.add("hide");$("qbox").classList.remove("hide");next()}
 function next(){if(idx>=queue.length){$("qbox").classList.add("hide");$("qend").classList.remove("hide");
- $("qsum").textContent=wrong.length?`本輪完成!答錯 ${wrong.length} / ${queue.length} 題`:`太棒了!本輪全部答對 (${queue.length} 題)`;
+ $("qsum").textContent=wrong.length?`本輪完成!🎈 答錯 ${wrong.length} / ${queue.length} 題`:`🏆 太棒了!本輪全部答對 (${queue.length} 題)`;
  $("qretry").classList.toggle("hide",!wrong.length);return}
- locked=false;$("qsub").textContent="確認答案";$("qin").value="";$("qin").disabled=false;$("qfb").textContent="";$("qfb").className="fb";
+ locked=false;$("qsub").textContent="✅ 確認答案";$("qin").value="";$("qin").disabled=false;$("qfb").textContent="";$("qfb").className="fb";
  const it=queue[idx];$("qprog").textContent=`第 ${idx+1} / ${queue.length} 題`+(it.w.includes("/")?"(此題有兩個形態,請用 / 分隔,如 a / b)":"");
  $("qbar").style.width=(idx/queue.length*100)+"%";$("qin").focus();speak(it.w)}
 function submit(){if(locked){idx++;next();return}
  const it=queue[idx],ok=norm($("qin").value)===norm(it.w);
- T.log.push({w:it.w,g:it.g,ok});save();locked=true;$("qin").disabled=true;$("qsub").textContent="下一題";
+ T.log.push({w:it.w,g:it.g,ok});save();locked=true;$("qin").disabled=true;$("qsub").textContent="➡️ 下一題";
  const [A,B]=diffHTML(it.w,$("qin").value),px=GM[it.g]&&GM[it.g].words.find(x=>x.w===it.w),P=px&&px.p?` <span class="ph">(${px.p})</span>`:"";
- if(ok){$("qfb").className="fb ok";$("qfb").innerHTML=`✔ 正確!<div>正確答案:<b>${A}</b>${P}</div>`}
- else{wrong.push(it);$("qfb").className="fb bad";$("qfb").innerHTML=`✘ 答錯了<div>你的答案:${B||"(空白)"}</div><div>正確答案:<b>${A}</b>${P}</div><div class="muted">綠色底線 = 漏掉或打錯的正確字母;紅色刪除線 = 多打或打錯的字母</div>`}}
+ if(ok){$("qfb").className="fb ok";$("qfb").innerHTML=`🎉 答對了!太棒了!<div>正確答案:<b>${A}</b>${P}</div>`}
+ else{wrong.push(it);$("qfb").className="fb bad";$("qfb").innerHTML=`💪 沒關係,再加油!<div>你的答案:${B||"(空白)"}</div><div>正確答案:<b>${A}</b>${P}</div><div class="muted">綠色底線 = 漏掉或打錯的正確字母;紅色刪除線 = 多打或打錯的字母</div>`}}
 function diffHTML(a,b){const x=norm(a),y=norm(b),n=x.length,m=y.length,d=Array.from({length:n+1},()=>Array(m+1).fill(0));
  const e=c=>c===" "?"&nbsp;":c.replace(/[&<>"]/g,k=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[k]));
  for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)d[i][j]=x[i]===y[j]?d[i+1][j+1]+1:Math.max(d[i+1][j],d[i][j+1]);
