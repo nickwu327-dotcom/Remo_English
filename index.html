@@ -1,320 +1,188 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>我的英文單字複習</title>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>單字複習站</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,"Noto Sans TC",sans-serif;background:#f4f6f8;color:#222}
-header{background:#243447;color:white;padding:18px 22px}
-header h1{margin:0;font-size:24px}
-header p{margin:6px 0 0;opacity:.85}
-.container{max-width:1050px;margin:20px auto;padding:0 15px}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.tabs button,.btn{border:0;border-radius:10px;padding:11px 16px;cursor:pointer;font-size:15px;background:#e2e8f0}
-.tabs button.active,.btn.primary{background:#2563eb;color:white}
-.btn.green{background:#16a34a;color:white}
-.btn.red{background:#dc2626;color:white}
-.btn.orange{background:#ea580c;color:white}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.card{background:white;border-radius:16px;padding:22px;box-shadow:0 3px 14px rgba(0,0,0,.08);margin-bottom:18px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
-.week-card{border:2px solid #e5e7eb;border-radius:14px;padding:18px;cursor:pointer;background:white}
-.week-card:hover{border-color:#2563eb}
-.word{font-size:42px;font-weight:700;text-align:center;margin:20px 0 10px}
-.meaning{font-size:24px;text-align:center;color:#475569;margin-bottom:20px}
-.example{text-align:center;color:#64748b;font-size:18px;margin:12px}
-.center{text-align:center}
-.progress{height:10px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin:10px 0 20px}
-.progress div{height:100%;background:#2563eb}
-.big-btn{font-size:18px;padding:13px 22px;border-radius:12px;border:0;cursor:pointer}
-.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:650px;margin:20px auto}
-.answer{padding:15px;border:2px solid #dbe2ea;border-radius:12px;background:white;cursor:pointer;font-size:17px}
-.answer:hover{border-color:#2563eb}
-input,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:9px;font-size:15px}
-label{display:block;margin-bottom:6px;font-weight:600}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-table{width:100%;border-collapse:collapse}
-th,td{padding:10px;border-bottom:1px solid #e5e7eb;text-align:left}
-.small{font-size:13px;color:#64748b}
-.stat{font-size:28px;font-weight:700}
-.badge{display:inline-block;padding:4px 8px;border-radius:99px;background:#e0f2fe;color:#0369a1;font-size:12px}
-.hidden{display:none!important}
-.notice{padding:12px;border-radius:10px;background:#eff6ff;color:#1e40af;margin-bottom:15px}
-@media(max-width:650px){.word{font-size:34px}.answers{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.container{margin-top:10px}}
-</style>
-</head>
-<body>
-<header>
-<h1>📚 我的英文單字複習</h1>
-<p>每週單字・發音・測驗・錯題複習</p>
-</header>
-<div class="container">
-<div class="tabs">
-<button class="active" onclick="showTab('learn',this)">📖 開始複習</button>
-<button onclick="showTab('manage',this)">📝 單字管理</button>
-<button onclick="showTab('stats',this)">📊 學習統計</button>
-</div>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f7f8fa;--fg:#1d2330;--card:#fff;--pri:#3b6fe0;--bd:#d9dde5;--ok:#1a8f4c;--bad:#d23b3b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171a21;--fg:#e8ebf2;--card:#232833;--pri:#6b94f0;--bd:#394050;--ok:#4cc582;--bad:#f06b6b}}
+:root[data-theme="dark"]{--bg:#171a21;--fg:#e8ebf2;--card:#232833;--pri:#6b94f0;--bd:#394050;--ok:#4cc582;--bad:#f06b6b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:12px}
+nav{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+nav button{flex:1;padding:10px 6px;border:1px solid var(--bd);background:var(--card);color:var(--fg);border-radius:10px;font-size:15px;cursor:pointer}
+nav button.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px}
+.weeks{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.weeks label{border:1px solid var(--bd);border-radius:8px;padding:5px 10px;cursor:pointer;user-select:none}
+.weeks label.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+.weeks input{display:none}
+button.b{padding:9px 16px;border:0;border-radius:8px;background:var(--pri);color:#fff;font-size:15px;cursor:pointer;margin:3px 4px 3px 0}
+button.b.g{background:transparent;color:var(--fg);border:1px solid var(--bd)}
+input[type=text],input[type=date]{font-size:20px;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+input[type=date]{font-size:15px;width:auto}
+.big{font-size:44px;text-align:center;margin:8px 0}
+.fb{text-align:center;font-size:18px;min-height:28px;margin:8px 0}
+.ok{color:var(--ok)}.bad{color:var(--bad)}
+.hide{display:none!important}
+.miss{color:var(--ok);font-weight:700;text-decoration:underline}.extra{color:var(--bad);text-decoration:line-through}.fb div{margin:4px 0;font-size:22px;letter-spacing:1px}.fb .ph{font-size:18px;letter-spacing:0;opacity:.75}.fb .muted{font-size:13px;letter-spacing:0}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--bd);text-align:left}
+.sc{overflow-x:auto}
+.muted{opacity:.65;font-size:14px}
+.row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd)}
+.row .w{font-size:19px;font-weight:600;min-width:120px}.row .p{flex:1;opacity:.75}
+.bar{height:8px;background:var(--bd);border-radius:4px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--pri)}
+</style></head><body><div class="wrap">
+<nav id="nav"></nav>
 
-<section id="learn">
-<div id="weekSelect" class="card">
-<h2>選擇學習週</h2>
-<div id="weeks" class="grid"></div>
+<section id="s0"><div class="card">
+<b>選擇單字表</b><div class="weeks" id="qset"></div><b>選擇測驗週次</b> <span class="muted" id="cwq"></span>
+<div class="weeks" id="qw"></div>
+<button class="b g" id="qprev">勾選前週及當週</button><button class="b g" id="qall">全選</button><button class="b g" id="qnone">全不選</button>
+<label style="display:block;margin:8px 0"><input type="checkbox" id="qwrong"> 錯題重複練習 <span class="muted">(從答錯的題目出題;沒有錯題則從所選週次隨機出題)</span></label>
+<div style="display:flex;justify-content:space-between;gap:120px;align-items:center;margin-top:6px"><button class="b" id="qstart" style="margin:0">開始測驗</button><button class="b g" id="qrestart" style="margin:0">重新開始</button></div>
+<div id="qmsg" class="bad" style="margin-top:8px"></div>
 </div>
-<div id="quiz" class="card hidden"></div>
+<div class="card hide" id="qbox">
+<div class="muted" id="qnote"></div><div class="muted" id="qprog"></div><div class="bar"><i id="qbar" style="width:0"></i></div>
+<div class="big"><button class="b" id="qplay" style="font-size:28px">🔊 聽發音</button></div>
+<input type="text" id="qin" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="輸入英文單字後按 Enter">
+<div class="fb" id="qfb"></div>
+<div><button class="b" id="qsub">確認答案</button></div></div>
+<div class="card hide" id="qend"><b id="qsum"></b><div style="margin-top:8px"><button class="b" id="qretry">錯題重複練習</button></div></div>
 </section>
 
-<section id="manage" class="hidden">
-<div class="card">
-<h2>新增單字</h2>
-<div class="form-row">
-<div><label>Week</label><input id="newWeek" placeholder="例如：Week 1"></div>
-<div><label>英文單字</label><input id="newWord" placeholder="例如：apple"></div>
-</div>
-<div class="form-row">
-<div><label>中文意思</label><input id="newChinese" placeholder="例如：蘋果"></div>
-<div><label>例句（可不填）</label><input id="newExample" placeholder="例如：I eat an apple."></div>
-</div>
-<button class="btn primary" onclick="addWord()">＋ 新增單字</button>
-<button class="btn" onclick="addDemo()">載入範例單字</button>
-</div>
-<div class="card">
-<h2>目前單字庫</h2>
-<div id="wordTable"></div>
-</div>
-</section>
+<section id="s1" class="hide"><div class="card"><b>選擇單字表</b><div class="weeks" id="sset"></div><b>選擇週次</b><div class="weeks" id="sw"></div>
+<button class="b g" id="sall">全選</button><button class="b g" id="snone">全不選</button>
+<div style="margin-top:8px" class="muted">測驗開始日期:<input type="date" id="d1"> ~ <input type="date" id="d2"></div></div>
+<div class="card sc" id="sout"></div></section>
 
-<section id="stats" class="hidden">
-<div class="card">
-<h2>學習統計</h2>
-<div id="statsContent"></div>
-</div>
-</section>
-</div>
+<section id="s2" class="hide"><div id="lout"></div></section>
 
+<section id="s3" class="hide"><div class="card"><b>選擇單字表</b><div class="weeks" id="rset"></div><b>選擇週次</b> <span class="muted" id="cwr"></span><div class="weeks" id="rw"></div></div>
+<div class="card" id="rout"></div></section>
+</div>
 <script>
-const STORAGE_KEY='my_vocab_v1';
-const RECORD_KEY='my_vocab_records_v1';
+const CET={
+"1-2":"lost|lɔːst;kitten|ˈkɪtn;whisper|ˈwɪspɚ;promise|ˈprɑːmɪs;cover|ˈkʌvɚ;nervous|ˈnɝːvəs;lead / led|liːd / lɛd;beside|bɪˈsaɪd;familiar|fəˈmɪljɚ;lie / lay|laɪ / leɪ",
+"3":"begin / began|bɪˈɡɪn / bɪˈɡæn;understand / understood|ˌʌndɚˈstænd / ˌʌndɚˈstʊd;take / took|teɪk / tʊk;while|waɪl;confident|ˈkɑːnfɪdənt;recess|ˈriːsɛs;crunching|ˈkrʌntʃɪŋ;edge|ɛdʒ;imagine|ɪˈmædʒɪn;sight|saɪt",
+"4":"peep|piːp;gap|ɡæp;whoever|huˈɛvɚ;fence|fɛns;spot|spɑːt;seem|siːm;shiver|ˈʃɪvɚ;either|ˈiːðɚ;breath|brɛθ;puzzled|ˈpʌzld",
+"5-6":"neighborhood|ˈneɪbɚhʊd;freeze / froze|friːz / froʊz;owner|ˈoʊnɚ;paw|pɔː;van|væn;should|ʃʊd;announcement|əˈnaʊnsmənt;address|əˈdrɛs;receive|rɪˈsiːv;hand|hænd",
+"7":"few|fjuː;reward|rɪˈwɔːrd;set up|sɛt ʌp;anytime|ˈɛnitaɪm;sincerely|sɪnˈsɪrli;whole|hoʊl;cheer|tʃɪr;rescue|ˈrɛskjuː;entire|ɪnˈtaɪɚ;bunch|bʌntʃ",
+"10":"underground|ˈʌndɚɡraʊnd;nature|ˈneɪtʃɚ;dig / dug|dɪɡ / dʌɡ;burrow|ˈbɝːoʊ;tunnel|ˈtʌnl;crowd|kraʊd;especially|ɪˈspɛʃəli;rich|rɪtʃ;section|ˈsɛkʃən;muscle|ˈmʌsl",
+"11":"cover|ˈkʌvɚ;tiny|ˈtaɪni;hide / hid|haɪd / hɪd;predator|ˈprɛdətɚ;dead|dɛd;important|ɪmˈpɔːrtnt;waste|weɪst;nutrient|ˈnuːtriənt;mammal|ˈmæml;shovel|ˈʃʌvl",
+"12-13":"nearly|ˈnɪrli;blind|blaɪnd;instead of|ɪnˈstɛd ʌv;sense|sɛns;meal|miːl;throughout|θruːˈaʊt;lay / laid|leɪ / leɪd;hatch|hætʃ;surface|ˈsɝːfɪs;spend / spent|spɛnd / spɛnt",
+"14-15":"hunt|hʌnt;area|ˈɛriə;endangered|ɪnˈdeɪndʒɚd;chemical|ˈkɛmɪkl;active|ˈæktɪv;as if|æz ɪf;about|əˈbaʊt;partly|ˈpɑːrtli;treeless|ˈtriːləs;inch|ɪntʃ",
+"16-17":"distance|ˈdɪstəns;during|ˈdʊrɪŋ;bright|braɪt;eyesight|ˈaɪsaɪt;benefit|ˈbɛnɪfɪt;survive|sɚˈvaɪv;adult|əˈdʌlt;form|fɔːrm;closely|ˈkloʊsli;sign|saɪn"};
+const FET={1:"street|striːt;flower|ˈflaʊɚ;luck|lʌk;letter|ˈlɛtɚ;greet|griːt;calm|kɑːm;lobster|ˈlɑːbstɚ;cabbage|ˈkæbɪdʒ;purchase|ˈpɝːtʃəs;item|ˈaɪtəm",
+2:"move|muːv;jump|dʒʌmp;quickly|ˈkwɪkli;stand|stænd;sniff|snɪf;pinch|pɪntʃ;store|stɔːr;wave|weɪv;corner|ˈkɔːrnɚ;late|leɪt",
+3:"different|ˈdɪfrənt;friend|frɛnd;Japan|dʒəˈpæn;fold|foʊld;dessert|dɪˈzɝːt;mix|mɪks;show|ʃoʊ;paper|ˈpeɪpɚ;task|tæsk;create|kriˈeɪt",
+4:"class|klæs;smile|smaɪl;Mexico|ˈmɛksɪkoʊ;crane|kreɪn;cook|kʊk;teach|tiːtʃ;taste|teɪst;many|ˈmɛni;game|ɡeɪm;school|skuːl",
+5:"celebrate|ˈsɛləbreɪt;weekend|ˈwiːkɛnd;chore|tʃɔːr;similar|ˈsɪmələr;streamer|ˈstriːmɚ;candle|ˈkændl;contribute|kənˈtrɪbjuːt;company|ˈkʌmpəni;gather|ˈɡæðɚ;crowd|kraʊd",
+6:"together|təˈɡɛðɚ;work|wɝːk;laugh|læf;plenty|ˈplɛnti;special|ˈspɛʃəl;birthday|ˈbɝːθdeɪ;bake|beɪk;salad|ˈsæləd;neighbor|ˈneɪbɚ;lemonade|ˌlɛməˈneɪd",
+7:"dinner|ˈdɪnɚ;well|wɛl;reflection|rɪˈflɛkʃən;roar|rɔːr;echo|ˈɛkoʊ;fake|feɪk;narrator|ˈnæreɪtɚ;foe|foʊ;identify|aɪˈdɛntɪfaɪ;focus|ˈfoʊkəs",
+8:"character|ˈkærɪktɚ;forest|ˈfɔːrɪst;king|kɪŋ;voice|vɔɪs;snack|snæk;catch|kætʃ;save|seɪv;smart|smɑːrt;strange|streɪndʒ;silly|ˈsɪli",
+10:"habit|ˈhæbɪt;cave|keɪv;plain|pleɪn;need|niːd;habitat|ˈhæbɪtæt;camel|ˈkæməl;amazing|əˈmeɪzɪŋ;species|ˈspiːʃiːz;appreciate|əˈpriːʃieɪt;illustrate|ˈɪləstreɪt",
+11:"feature|ˈfiːtʃɚ;roam|roʊm;desert|ˈdɛzɚt;penguin|ˈpɛŋɡwɪn;teem|tiːm;several|ˈsɛvrəl;freshwater|ˈfrɛʃwɔːtɚ;Earth|ɝːθ;scientist|ˈsaɪəntɪst;ocean|ˈoʊʃən",
+12:"insect|ˈɪnsɛkt;predator|ˈprɛdətɚ;camouflage|ˈkæməflɑːʒ;pattern|ˈpætɚn;prey|preɪ;environment|ɪnˈvaɪrənmənt;enable|ɪˈneɪbl;branch|bræntʃ;pounce|paʊns;moth|mɔːθ",
+13:"stick|stɪk;hide|haɪd;spot|spɑːt;ground|ɡraʊnd;blend in|blɛnd ɪn;migrate|ˈmaɪɡreɪt;lizard|ˈlɪzɚd;stripe|straɪp;light|laɪt;dark|dɑːrk",
+14:"butterfly|ˈbʌtɚflaɪ;caterpillar|ˈkætɚpɪlɚ;tadpole|ˈtædpoʊl;change|tʃeɪndʒ;hatch|hætʃ;occur|əˈkɝː;transform|trænsˈfɔːrm;munch|mʌntʃ;vulnerable|ˈvʌlnərəbl;wiggle|ˈwɪɡl",
+15:"frog|frɔːɡ;egg|ɛɡ;leaf|liːf;dramatic|drəˈmætɪk;sequence|ˈsiːkwəns;chrysalis|ˈkrɪsəlɪs;survive|sɚˈvaɪv;wing|wɪŋ;transformation|ˌtrænsfɚˈmeɪʃən;develop|dɪˈvɛləp",
+16:"cloud|klaʊd;strong|strɔːŋ;spider|ˈspaɪdɚ;argue|ˈɑːrɡjuː;web|wɛb;strength|strɛŋθ;bright|braɪt;breeze|briːz;affect|əˈfɛkt;attitude|ˈætɪtuːd",
+17:"blow|bloʊ;loud|laʊd;restless|ˈrɛstləs;breath|brɛθ;shine|ʃaɪn;proud|praʊd;disappear|ˌdɪsəˈpɪr;contest|ˈkɑːntɛst;crawl|krɔːl;tiny|ˈtaɪni"};
+const G=[],GM={};
+[["CET",CET],["FET",FET]].forEach(([s,R])=>Object.keys(R).sort((a,b)=>parseInt(a)-parseInt(b)).forEach(k=>{
+ const[a,b]=k.split("-").map(Number),f=a,t=b||a,g={id:s[0]+k,set:s,from:f,to:t,label:s+" 第"+(f===t?f:f+"&"+t)+"週",
+ words:R[k].split(";").map(x=>{const[w,p]=x.split("|");return{w,p}})};G.push(g);GM[g.id]=g}));
+const $=id=>document.getElementById(id);
+const t0=new Date();t0.setHours(0,0,0,0);
+const CUR=Math.floor(Math.round((t0-new Date(2026,7,31))/864e5)/7)+1;
+const hit=(g,w)=>w>=g.from&&w<=g.to;
+const prevCur=set=>G.filter(g=>(!set||g.set===set)&&(hit(g,CUR)||hit(g,CUR-1))).map(g=>g.id);
+let tests=[];try{tests=JSON.parse(localStorage.getItem("vq_tests")||"[]")}catch(e){}
+tests.forEach(t=>{t.log.forEach(l=>{if(!l.g){const g=G.find(g=>g.set==="FET"&&g.words.some(x=>x.w===l.w));l.g=g?g.id:"F?"}});
+ t.weeks=t.weeks.map(x=>typeof x==="number"?"F"+x:x)});
+const save=()=>{try{localStorage.setItem("vq_tests",JSON.stringify(tests))}catch(e){}};
+const fmt=ts=>{const d=new Date(ts),p=n=>String(n).padStart(2,"0");return`${d.getFullYear()}/${p(d.getMonth()+1)}/${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const speak=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/\//g,","));u.lang="en-US";u.rate=.85;speechSynthesis.speak(u)}catch(e){}};
+const norm=s=>s.toLowerCase().trim().replace(/\s*\/\s*/g," / ").replace(/\s+/g," ");
+const gl=id=>GM[id]?GM[id].label:id;
 
-let words=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null') || [];
-let records=JSON.parse(localStorage.getItem(RECORD_KEY)||'{}');
-let currentWeek='';
-let quizWords=[];
-let quizIndex=0;
-let score=0;
-let mode='flash';
+function chips(id,items,isOn,click){const c=$(id);c.innerHTML="";items.forEach(([k,txt])=>{const l=document.createElement("label");l.textContent=txt;l.className=isOn(k)?"on":"";l.onclick=e=>{e.preventDefault();click(k)};c.appendChild(l)})}
+const wkChips=(id,set,sel,cb)=>chips(id,G.filter(g=>!set||g.set===set).map(g=>[g.id,set?g.label.slice(4):g.label]),k=>sel.has(k),k=>{sel.has(k)?sel.delete(k):sel.add(k);wkChips(id,set,sel,cb);cb&&cb()});
+const order=sel=>G.filter(g=>sel.has(g.id)).map(g=>g.id);
 
-function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(words));localStorage.setItem(RECORD_KEY,JSON.stringify(records));}
+const TABS=["測驗","學習統計","學習狀況","單字複習"];
+TABS.forEach((n,i)=>{const b=document.createElement("button");b.textContent=n;b.onclick=()=>show(i);$("nav").appendChild(b)});
+function show(i){TABS.forEach((_,j)=>{$("s"+j).classList.toggle("hide",i!==j);$("nav").children[j].classList.toggle("on",i===j)});if(i===1)stats();if(i===2)status();if(i===3)review()}
+const setChips=(id,cur,cb)=>chips(id,[["CET","CET"],["FET","FET"]],k=>k===cur,k=>{cb(k)});
 
-function showTab(id,btn){
- document.querySelectorAll('section').forEach(x=>x.classList.add('hidden'));
- document.getElementById(id).classList.remove('hidden');
- document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));
- btn.classList.add('active');
- if(id==='learn') renderWeeks();
- if(id==='manage') renderTable();
- if(id==='stats') renderStats();
-}
+// quiz
+let qSet="CET";const qSel=new Set(prevCur(qSet));
+function qRender(){setChips("qset",qSet,k=>{qSet=k;qSel.clear();prevCur(k).forEach(x=>qSel.add(x));qRender()});wkChips("qw",qSet,qSel)}
+$("cwq").textContent="(目前第 "+CUR+" 週)";qRender();
+const setQ=a=>{qSel.clear();a.forEach(w=>qSel.add(w));wkChips("qw",qSet,qSel)};
+$("qprev").onclick=()=>setQ(prevCur(qSet));$("qall").onclick=()=>setQ(G.filter(g=>g.set===qSet).map(g=>g.id));$("qnone").onclick=()=>setQ([]);
+let T=null,queue=[],idx=0,wrong=[],locked=false,base=[],note="";
+const msg=t=>{$("qmsg").textContent=t;clearTimeout(msg.t);msg.t=setTimeout(()=>$("qmsg").textContent="",3000)};
+function wrongWords(ids){const last={};tests.slice().sort((a,b)=>a.id-b.id).forEach(t=>t.log.forEach(l=>{last[l.g+"|"+l.w]=l.ok}));
+ return Object.keys(last).filter(k=>!last[k]).map(k=>{const i=k.indexOf("|");return{g:k.slice(0,i),w:k.slice(i+1)}}).filter(x=>ids.includes(x.g))}
+function begin(){if(!qSel.size){msg("請先選擇週次");return}
+ const ids=order(qSel),on=$("qwrong").checked,wr=on?wrongWords(ids):[];
+ base=wr.length?wr:ids.flatMap(id=>GM[id].words.map(x=>({w:x.w,g:id})));
+ note=on?(wr.length?`錯題重複練習:共 ${wr.length} 題`:"所選週次目前沒有錯題,改為隨機出題"):"";launch(ids)}
+function launch(ids){T={id:Date.now(),set:qSet,weeks:ids,log:[]};tests.push(T);save();round(shuffle(base));$("qnote").textContent=note}
+function round(list){queue=list;idx=0;wrong=[];$("qend").classList.add("hide");$("qbox").classList.remove("hide");next()}
+function next(){if(idx>=queue.length){$("qbox").classList.add("hide");$("qend").classList.remove("hide");
+ $("qsum").textContent=wrong.length?`本輪完成!答錯 ${wrong.length} / ${queue.length} 題`:`太棒了!本輪全部答對 (${queue.length} 題)`;
+ $("qretry").classList.toggle("hide",!wrong.length);return}
+ locked=false;$("qsub").textContent="確認答案";$("qin").value="";$("qin").disabled=false;$("qfb").textContent="";$("qfb").className="fb";
+ const it=queue[idx];$("qprog").textContent=`第 ${idx+1} / ${queue.length} 題`+(it.w.includes("/")?"(此題有兩個形態,請用 / 分隔,如 a / b)":"");
+ $("qbar").style.width=(idx/queue.length*100)+"%";$("qin").focus();speak(it.w)}
+function submit(){if(locked){idx++;next();return}
+ const it=queue[idx],ok=norm($("qin").value)===norm(it.w);
+ T.log.push({w:it.w,g:it.g,ok});save();locked=true;$("qin").disabled=true;$("qsub").textContent="下一題";
+ const [A,B]=diffHTML(it.w,$("qin").value),px=GM[it.g]&&GM[it.g].words.find(x=>x.w===it.w),P=px&&px.p?` <span class="ph">(${px.p})</span>`:"";
+ if(ok){$("qfb").className="fb ok";$("qfb").innerHTML=`✔ 正確!<div>正確答案:<b>${A}</b>${P}</div>`}
+ else{wrong.push(it);$("qfb").className="fb bad";$("qfb").innerHTML=`✘ 答錯了<div>你的答案:${B||"(空白)"}</div><div>正確答案:<b>${A}</b>${P}</div><div class="muted">綠色底線 = 漏掉或打錯的正確字母;紅色刪除線 = 多打或打錯的字母</div>`}}
+function diffHTML(a,b){const x=norm(a),y=norm(b),n=x.length,m=y.length,d=Array.from({length:n+1},()=>Array(m+1).fill(0));
+ const e=c=>c===" "?"&nbsp;":c.replace(/[&<>"]/g,k=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[k]));
+ for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)d[i][j]=x[i]===y[j]?d[i+1][j+1]+1:Math.max(d[i+1][j],d[i][j+1]);
+ let i=0,j=0,A="",B="";
+ while(i<n||j<m){if(i<n&&j<m&&x[i]===y[j]){A+=e(a[i]);B+=e(y[j]);i++;j++}
+  else if(j>=m||(i<n&&d[i+1][j]>=d[i][j+1])){A+=`<u class="miss">${e(a[i])}</u>`;i++}
+  else{B+=`<s class="extra">${e(y[j])}</s>`;j++}}
+ return[A,B]}
+$("qstart").onclick=begin;$("qsub").onclick=submit;
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&!$("qbox").classList.contains("hide")){e.preventDefault();submit()}});
+$("qplay").onclick=()=>{speak(queue[idx].w);$("qin").focus()};
+$("qretry").onclick=()=>round(shuffle(wrong));
+$("qrestart").onclick=()=>{if(!T){msg("尚未開始測驗");return}try{speechSynthesis.cancel()}catch(e){}const ids=T.weeks;tests=tests.filter(t=>t!==T);qSet=T.set||qSet;launch(ids)};
 
-function renderWeeks(){
- const box=document.getElementById('weeks');
- const weeks=[...new Set(words.map(x=>x.week))];
- if(!weeks.length){box.innerHTML='<div class="notice">目前沒有單字。請到「單字管理」新增，或載入範例單字。</div>';return;}
- box.innerHTML=weeks.map(w=>{
-   const n=words.filter(x=>x.week===w).length;
-   return `<div class="week-card" onclick="startWeek('${escapeJs(w)}')"><h3>📘 ${escapeHtml(w)}</h3><p>${n} 個單字</p><button class="btn primary">開始複習</button></div>`;
- }).join('');
-}
+// stats
+let sSet="CET";const sSel=new Set(prevCur(sSet));
+function sR(){setChips("sset",sSet,k=>{sSet=k;sSel.clear();prevCur(k).forEach(x=>sSel.add(x));sR();stats()});wkChips("sw",sSet,sSel,stats)}sR();
+$("sall").onclick=()=>{G.filter(g=>g.set===sSet).forEach(g=>sSel.add(g.id));sR();stats()};$("snone").onclick=()=>{sSel.clear();sR();stats()};$("d1").onchange=stats;$("d2").onchange=stats;
+function tbl(rows){return`<table><tr><th>單字</th><th>單字表/週</th><th>測驗次</th><th>答錯</th><th>答錯率</th></tr>`+rows.map(r=>`<tr><td>${r.w}</td><td>${gl(r.g)}</td><td>${r.n}</td><td>${r.x}</td><td>${Math.round(r.x/r.n*100)}%</td></tr>`).join("")+"</table>"}
+const agg=log=>{const m={};log.forEach(l=>{const k=l.g+"|"+l.w,o=m[k]||(m[k]={w:l.w,g:l.g,n:0,x:0});o.n++;if(!l.ok)o.x++});return Object.values(m).sort((a,b)=>b.x/b.n-a.x/a.n||b.x-a.x)};
+function stats(){const a=$("d1").value?new Date($("d1").value+"T00:00:00").getTime():0,b=$("d2").value?new Date($("d2").value+"T23:59:59").getTime():Infinity;
+ if(!sSel.size){$("sout").innerHTML='<span class="muted">請選擇要查看的週次</span>';return}
+ const log=tests.filter(t=>t.id>=a&&t.id<=b).flatMap(t=>t.log).filter(l=>sSel.has(l.g));
+ $("sout").innerHTML=log.length?tbl(agg(log)):'<span class="muted">此條件下沒有測驗紀錄</span>'}
 
-function startWeek(week){
- currentWeek=week;
- quizWords=shuffle(words.filter(x=>x.week===week));
- quizIndex=0;score=0;mode='flash';
- document.getElementById('weekSelect').classList.add('hidden');
- document.getElementById('quiz').classList.remove('hidden');
- renderQuiz();
-}
+// status
+function status(){const c=$("lout");if(!tests.length){c.innerHTML='<div class="card muted">尚無測驗紀錄</div>';return}
+ c.innerHTML=tests.slice().sort((a,b)=>b.id-a.id).map(t=>{const x=t.log.filter(l=>!l.ok).length;
+ return`<div class="card sc"><b>${fmt(t.id)}</b> <span class="muted">${t.weeks.map(gl).join("、")}|作答 ${t.log.length} 次,答錯 ${x} 次</span>`+(t.log.length?tbl(agg(t.log)):"")+"</div>"}).join("")}
 
-function renderQuiz(){
- const q=document.getElementById('quiz');
- if(quizIndex>=quizWords.length){finishQuiz();return;}
- const w=quizWords[quizIndex];
- const pct=Math.round((quizIndex/quizWords.length)*100);
- q.innerHTML=`
- <div class="small">${escapeHtml(currentWeek)}　${quizIndex+1} / ${quizWords.length}</div>
- <div class="progress"><div style="width:${pct}%"></div></div>
- <div class="center">
-   <div class="word">${escapeHtml(w.word)}</div>
-   <button class="big-btn btn orange" onclick="speak('${escapeJs(w.word)}')">🔊 聽發音</button>
-   <div class="meaning">${escapeHtml(w.chinese)}</div>
-   ${w.example?`<div class="example">${escapeHtml(w.example)}</div>`:''}
-   <div style="margin:20px 0">
-    <button class="btn green" onclick="answer(true)">✓ 我會</button>
-    <button class="btn red" onclick="answer(false)">✗ 不會</button>
-   </div>
- </div>
- <hr>
- <div class="center">
-  <button class="btn" onclick="startTest('choice')">🎯 四選一</button>
-  <button class="btn" onclick="startTest('spell')">✍️ 英文拼字</button>
-  <button class="btn" onclick="startTest('listen')">👂 聽寫</button>
- </div>
- <div class="center" style="margin-top:20px"><button class="btn" onclick="backToWeeks()">← 回到選擇週</button></div>`;
-}
-
-function answer(correct){
- const w=quizWords[quizIndex];
- updateRecord(w.word,correct);
- if(correct)score++;
- quizIndex++;
- renderQuiz();
-}
-
-function startTest(type){
- mode=type;
- quizWords=shuffle(words.filter(x=>x.week===currentWeek));
- quizIndex=0;score=0;
- renderTest();
-}
-
-function renderTest(){
- const q=document.getElementById('quiz');
- if(quizIndex>=quizWords.length){finishQuiz();return;}
- const w=quizWords[quizIndex];
- const pct=Math.round((quizIndex/quizWords.length)*100);
- let body='';
- if(mode==='choice'){
-   const options=shuffle([w.chinese,...shuffle(words.filter(x=>x.word!==w.word).map(x=>x.chinese)).slice(0,3)]);
-   body=`<div class="word">${escapeHtml(w.word)}</div><button class="big-btn btn orange" onclick="speak('${escapeJs(w.word)}')">🔊 聽發音</button>
-   <div class="answers">${options.map(x=>`<button class="answer" onclick="choiceAnswer('${escapeJs(x)}','${escapeJs(w.chinese)}')">${escapeHtml(x)}</button>`).join('')}</div>`;
- }else if(mode==='spell'){
-   body=`<div class="meaning">${escapeHtml(w.chinese)}</div><input id="answerInput" placeholder="請輸入英文單字" autocomplete="off" onkeydown="if(event.key==='Enter')checkInput()"><br><br><button class="btn primary" onclick="checkInput()">確認</button><button class="btn orange" onclick="speak('${escapeJs(w.word)}')">🔊 聽發音</button>`;
- }else{
-   body=`<div class="meaning">請聽發音後輸入單字</div><button class="big-btn btn orange" onclick="speak('${escapeJs(w.word)}')">🔊 播放</button><br><br><input id="answerInput" placeholder="請輸入你聽到的英文單字" autocomplete="off" onkeydown="if(event.key==='Enter')checkInput()"><br><br><button class="btn primary" onclick="checkInput()">確認</button>`;
- }
- q.innerHTML=`<div class="small">${escapeHtml(currentWeek)}　${quizIndex+1} / ${quizWords.length}</div><div class="progress"><div style="width:${pct}%"></div></div><div class="center">${body}</div><div class="center" style="margin-top:25px"><button class="btn" onclick="startWeek('${escapeJs(currentWeek)}')">↩ 回到單字卡</button></div>`;
-}
-
-function choiceAnswer(selected,correct){
- const ok=selected===correct;
- updateRecord(quizWords[quizIndex].word,ok);
- if(ok)score++;
- alert(ok?'✓ 答對了！':'✗ 答錯了，正確答案是：'+correct);
- quizIndex++;renderTest();
-}
-
-function checkInput(){
- const input=document.getElementById('answerInput');
- if(!input)return;
- const value=input.value.trim().toLowerCase();
- const correct=quizWords[quizIndex].word.toLowerCase();
- const ok=value===correct;
- updateRecord(quizWords[quizIndex].word,ok);
- if(ok)score++;
- alert(ok?'✓ 答對了！':'✗ 答錯了，正確答案是：'+quizWords[quizIndex].word);
- quizIndex++;renderTest();
-}
-
-function finishQuiz(){
- const q=document.getElementById('quiz');
- const total=quizWords.length;
- q.innerHTML=`<div class="center"><h2>🎉 複習完成</h2><div class="stat">${score} / ${total}</div><p>正確率：${Math.round(score/total*100)}%</p><button class="btn primary" onclick="startWeek('${escapeJs(currentWeek)}')">再複習一次</button><button class="btn" onclick="backToWeeks()">選其他 Week</button></div>`;
-}
-
-function backToWeeks(){
- document.getElementById('quiz').classList.add('hidden');
- document.getElementById('weekSelect').classList.remove('hidden');
- renderWeeks();
-}
-
-function updateRecord(word,correct){
- if(!records[word])records[word]={correct:0,wrong:0,last:''};
- if(correct)records[word].correct++;else records[word].wrong++;
- records[word].last=new Date().toLocaleString('zh-TW');
- save();
-}
-
-function speak(word){
- if(!('speechSynthesis' in window)){alert('此瀏覽器不支援語音播放。');return;}
- speechSynthesis.cancel();
- const u=new SpeechSynthesisUtterance(word);
- u.lang='en-US';
- u.rate=.8;
- u.pitch=1;
- speechSynthesis.speak(u);
-}
-
-function addWord(){
- const week=document.getElementById('newWeek').value.trim();
- const word=document.getElementById('newWord').value.trim();
- const chinese=document.getElementById('newChinese').value.trim();
- const example=document.getElementById('newExample').value.trim();
- if(!week||!word||!chinese){alert('請至少填寫 Week、英文單字、中文意思。');return;}
- words.push({id:Date.now(),week,word,chinese,example});
- save();
- document.getElementById('newWord').value='';
- document.getElementById('newChinese').value='';
- document.getElementById('newExample').value='';
- renderTable();renderWeeks();
- alert('新增成功！');
-}
-
-function addDemo(){
- const demo=[
- {week:'Week 1',word:'apple',chinese:'蘋果',example:'I eat an apple.'},
- {week:'Week 1',word:'banana',chinese:'香蕉',example:'I like bananas.'},
- {week:'Week 1',word:'orange',chinese:'柳橙',example:'This is an orange.'},
- {week:'Week 1',word:'school',chinese:'學校',example:'I go to school.'},
- {week:'Week 1',word:'teacher',chinese:'老師',example:'She is my teacher.'},
- {week:'Week 2',word:'beautiful',chinese:'美麗的',example:'It is beautiful.'},
- {week:'Week 2',word:'important',chinese:'重要的',example:'This is important.'},
- {week:'Week 2',word:'family',chinese:'家庭',example:'I love my family.'}
- ];
- demo.forEach(x=>words.push({...x,id:Date.now()+Math.random()}));
- save();renderTable();renderWeeks();alert('已載入範例單字！');
-}
-
-function renderTable(){
- const box=document.getElementById('wordTable');
- if(!words.length){box.innerHTML='<p>尚無資料。</p>';return;}
- box.innerHTML=`<table><thead><tr><th>Week</th><th>英文</th><th>中文</th><th>學習紀錄</th><th>操作</th></tr></thead><tbody>`+
- words.map((w,i)=>{
-  const r=records[w.word]||{correct:0,wrong:0};
-  return `<tr><td>${escapeHtml(w.week)}</td><td><b>${escapeHtml(w.word)}</b></td><td>${escapeHtml(w.chinese)}</td><td>✓ ${r.correct} / ✗ ${r.wrong}</td><td><button class="btn red" onclick="deleteWord(${i})">刪除</button></td></tr>`;
- }).join('')+'</tbody></table>';
-}
-
-function deleteWord(i){
- if(confirm('確定要刪除這個單字嗎？')){delete records[words[i].word];words.splice(i,1);save();renderTable();renderWeeks();renderStats();}
-}
-
-function renderStats(){
- const total=words.length;
- let c=0,w=0;
- words.forEach(x=>{const r=records[x.word]||{};c+=r.correct||0;w+=r.wrong||0;});
- const weak=words.map(x=>({x,r:records[x.word]||{correct:0,wrong:0}})).filter(a=>a.r.wrong>a.r.correct).sort((a,b)=>b.r.wrong-a.r.wrong).slice(0,10);
- document.getElementById('statsContent').innerHTML=`
- <div class="grid">
-  <div class="card"><div class="small">單字總數</div><div class="stat">${total}</div></div>
-  <div class="card"><div class="small">答對次數</div><div class="stat">${c}</div></div>
-  <div class="card"><div class="small">答錯次數</div><div class="stat">${w}</div></div>
-  <div class="card"><div class="small">整體正確率</div><div class="stat">${c+w?Math.round(c/(c+w)*100):0}%</div></div>
- </div>
- <h3>⚠ 需要加強的單字</h3>
- ${weak.length?'<table><tr><th>Week</th><th>單字</th><th>答對</th><th>答錯</th></tr>'+weak.map(a=>`<tr><td>${escapeHtml(a.x.week)}</td><td>${escapeHtml(a.x.word)}</td><td>${a.r.correct}</td><td>${a.r.wrong}</td></tr>`).join('')+'</table>':'<p>目前沒有需要加強的單字。</p>'}
- <br><button class="btn red" onclick="resetRecords()">清除學習紀錄</button>`;
-}
-
-function resetRecords(){if(confirm('確定清除所有學習紀錄嗎？單字不會被刪除。')){records={};save();renderStats();renderTable();}}
-
-function shuffle(arr){return [...arr].sort(()=>Math.random()-.5);}
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
-function escapeJs(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,' ');}
-
-renderWeeks();
-renderTable();
-renderStats();
-</script>
-</body>
-</html>
+// review
+let rSet="CET";const rSel=new Set(prevCur(rSet));
+function rRender(){setChips("rset",rSet,k=>{rSet=k;rSel.clear();prevCur(k).forEach(x=>rSel.add(x));rRender()});wkChips("rw",rSet,rSel,review);review()}
+$("cwr").textContent="(目前第 "+CUR+" 週,已自動勾選前週及當週)";
+function review(){const ids=order(rSel);
+ $("rout").innerHTML=ids.length?ids.map(id=>`<h4 style="margin:10px 0 0">${GM[id].label}</h4>`+GM[id].words.map((x,i)=>`<div class="row"><span class="w">${x.w}</span><span class="p">${x.p?"/"+x.p+"/":""}</span><button class="b g" data-s="${id}|${i}">🔊</button></div>`).join("")).join(""):'<span class="muted">請選擇週次</span>'}
+$("rout").onclick=e=>{const s=e.target.dataset&&e.target.dataset.s;if(s){const[g,i]=s.split("|");speak(GM[g].words[i].w)}};
+rRender();show(0);
+</script></body></html>
